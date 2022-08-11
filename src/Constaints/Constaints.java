@@ -25,15 +25,14 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
-@SuppressWarnings("deprecation")
+
 public class Constaints {
 
 	public static WebDriver driver;
 	public static String url= "https://www.mountaingear.com/";
-	public static ExtentHtmlReporter htmlReporter;
 	public static ExtentReports extent;
 	public ExtentTest test;
 	
@@ -49,21 +48,15 @@ public class Constaints {
 		driver.get(url);
 		driver.manage().window().maximize();
 		try {
-			htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/test-output/xtentReport.html");
-			// Create an object of Extent Reports
-			htmlReporter.config().setDocumentTitle("Automation Report "); 
-			// Name of the report
-			htmlReporter.config().setReportName("Functional Report "); 
-			// Dark Theme
-			htmlReporter.config().setTheme(Theme.DARK); 
-
-			extent = new ExtentReports();  
-			extent.attachReporter(htmlReporter);
-			extent.setSystemInfo("Host Name", "MountainGear");
-			extent.setSystemInfo("OS", "Windows10");
-			extent.setSystemInfo("Environment", "Production");
-			extent.setSystemInfo("User Name", "Phaneendra");
-			extent.setSystemInfo("Browser", "Chrome");
+			
+			extent = new ExtentReports();
+			ExtentSparkReporter spark = new ExtentSparkReporter(
+					System.getProperty("user.dir") + "/test-output/xtentReport.html");
+			spark.config().setTheme(Theme.DARK);
+			spark.config().setDocumentTitle("Automation Report");
+			spark.config().setReportName("SFS");
+			extent.attachReporter(spark);
+			
 		}		
 		catch(Exception ex) {
 
